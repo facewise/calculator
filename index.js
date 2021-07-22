@@ -1,24 +1,56 @@
-const output = document.getElementById("main");
-const sub = document.getElementById("sub");
+const output = document.querySelector("#main");
+const sub = document.querySelector("#sub");
+
+const wrap = document.querySelector("#wrap");
+const acButton = document.querySelector("#acBtn");
+const equalButton = document.querySelector("#equal");
 
 let num1;
 let num2;
 let op;
 
-function clickNumber(button) {
-    output.innerHTML += button.innerHTML;
+const add = (a, b) => {
+    return a + b;
 }
 
-function clickOperator(button) {
-    if (output.innerHTML !== "") {
-        num1 = Number.parseFloat(output.innerHTML);
-        output.innerHTML = "";
-        op = button.innerHTML;
-        sub.innerHTML = num1 + " " + op;
+const subtract = (a, b) => {
+    return a - b;
+}
+
+const multiply = (a, b) => {
+    return a * b;
+}
+
+const divide = (a, b) => {
+    if (b !== 0)
+        return a / b;
+    return "Error";
+}
+
+const clickEvent = (e) => {
+    const target = e.target;
+    if (target.className === "number") {
+        output.innerHTML += target.innerHTML;
+    }
+    else if (target.className === "operator") {
+        if (output.innerHTML !== "") {
+            num1 = Number.parseFloat(output.innerHTML);
+            output.innerHTML = "";
+            op = target.innerHTML;
+            sub.innerHTML = num1 + " " + op;
+        }
     }
 }
 
-function clickEqual() {
+const acBtnClickEvent = () => {
+    num1 = ""
+    num2 = ""
+    op = ""
+    output.innerHTML = ""
+    sub.innerHTML = ""
+}
+
+const equalClickEvent = () => {
     if (num1 !== "") {
         num2 = Number.parseFloat(output.innerHTML);
         sub.innerHTML += " " + num2 + " = ";
@@ -44,29 +76,10 @@ function clickEqual() {
     op = ""
 }
 
-function clickAC() {
-    num1 = ""
-    num2 = ""
-    op = ""
-    output.innerHTML = ""
-    sub.innerHTML = ""
+const init = () => {
+    wrap.addEventListener("click", clickEvent);
+    acButton.addEventListener("click", acBtnClickEvent);
+    equalButton.addEventListener("click", equalClickEvent);
 }
 
-function add(num1, num2) {
-    return num1 + num2;
-}
-
-function subtract(num1, num2) {
-    return num1 - num2;
-}
-
-function multiply(num1, num2) {
-    return num1 * num2;
-}
-
-function divide(num1, num2) {
-    if (num2 !== 0)
-        return num1 / num2;
-    return "Error";
-}
-
+init();
